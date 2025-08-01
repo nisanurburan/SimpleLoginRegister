@@ -5,13 +5,13 @@ export default function Home() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Kullanıcı oturumunu sil (örneğin localStorage veya token temizlenebilir)
-    localStorage.removeItem("token"); // Eğer token kaydedildiyse
-    navigate("/login"); // Login sayfasına yönlendir
+    // Remove user session (e.g., clear localStorage or token)
+    localStorage.removeItem("token"); // If token is stored
+    navigate("/login"); // Redirect to login page
   };
 
   useEffect(() => {
-    // Giriş yapılmadıysa yönlendir (basit örnek, auth kontrolü için)
+    // Redirect if not logged in (simple example for auth check)
     const token = localStorage.getItem("token");
     if (!token) {
       navigate("/login");

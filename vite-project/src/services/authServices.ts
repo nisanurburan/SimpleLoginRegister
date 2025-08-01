@@ -29,7 +29,7 @@ export async function register(UserName: string, Password: string, Email: string
 
 export function logout() {
   localStorage.removeItem("token");
-  localStorage.removeItem("expiresAt");  // Bunu ekle
+  localStorage.removeItem("expiresAt"); 
 }
 
 export function getToken() {
