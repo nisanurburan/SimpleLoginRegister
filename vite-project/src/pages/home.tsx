@@ -83,8 +83,8 @@ const styles = {
     marginBottom: "30px",
   },
   button: {
-    padding: "12px 24px",
-    fontSize: "16px",
+    padding: "15px 30px",
+    fontSize: "20px",
     backgroundColor: "#dc3545",
     color: "white",
     border: "none",
@@ -93,9 +93,9 @@ const styles = {
   },
   modal: {
     position: "fixed" as const,
-    top: "10%",               // Yukarıda görünmesi için
+    top: "10%",               
     left: "50%",
-    transform: "translate(-50%, 0)", // Dikey ortalamayı kaldırdık
+    transform: "translate(-50%, 0)", 
     backgroundColor: "white",
     padding: "30px",
     borderRadius: "12px",
