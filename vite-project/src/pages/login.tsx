@@ -12,7 +12,7 @@ export default function Login() {
   e.preventDefault();
   setError(""); 
   try {
-    await login({ email: Email, password: Password }); // burada zaten localStorage'a kaydediliyor
+    await login({ email: Email, password: Password }); // it's already being saved to localStorage here
     navigate("/home"); 
   } catch (err) {
     setError("Email or password is incorrect.");

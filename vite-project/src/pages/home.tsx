@@ -15,7 +15,8 @@ export default function Home() {
   const resetTimer = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     timeoutRef.current = setTimeout(() => {
-      setShowModal(true); // alert yerine modal aç
+      localStorage.removeItem("expiresAt"); // Remove session expiration info on refresh
+      setShowModal(true); // Show modal
     }, 60 * 1000);
   };
 
@@ -93,9 +94,9 @@ const styles = {
   },
   modal: {
     position: "fixed" as const,
-    top: "10%",               
+    top: "10%",
     left: "50%",
-    transform: "translate(-50%, 0)", 
+    transform: "translate(-50%, 0)",
     backgroundColor: "white",
     padding: "30px",
     borderRadius: "12px",
