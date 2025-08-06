@@ -3,21 +3,33 @@ import { login } from "../services/authServices";
 import {useNavigate, Link } from "react-router-dom";
 
 export default function Login() {
-  const [Email, setEmail] = useState("");
-  const [Password, setPassword] = useState("");
+  const [identifier, setIdentifier] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setError(""); 
-  try {
-    await login({ email: Email, password: Password }); // it's already being saved to localStorage here
-    navigate("/home"); 
-  } catch (err) {
-    setError("Email or password is incorrect.");
-  }
-};
+    e.preventDefault();
+    setError("");
+
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&_*]).{8,}$/;
+
+    if (!passwordRegex.test(password)) {
+      setError("Password must be at least 8 characters, include an uppercase letter, a number, and a special symbol.");
+      return;
+    }
+
+    try {
+      await login({ identifier, password });
+      navigate("/home");
+    } catch (err: any) {
+      if (err.response && err.response.data && err.response.data.message) {
+        setError(err.response.data.message);
+      } else {
+        setError("Email, username or password is incorrect.");
+      }
+    }
+  };
 
   return (
     <>
@@ -89,13 +101,13 @@ export default function Login() {
         <h2>Log in</h2>
         {error && <p className="error">{error}</p>}
         <input
-          value={Email}
-          onChange={e => setEmail(e.target.value)}
-          placeholder="Email"
+          value={identifier}
+          onChange={e => setIdentifier(e.target.value)}
+          placeholder="Email or Username"
         />
         <input
           type="password"
-          value={Password}
+          value={password}
           onChange={e => setPassword(e.target.value)}
           placeholder="Password"
         />

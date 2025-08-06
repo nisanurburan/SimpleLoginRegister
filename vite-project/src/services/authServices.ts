@@ -1,11 +1,18 @@
 import axios from "axios";
 
-const API_BASE = import.meta.env.VITE_API_URL;
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
-export async function login({ email, password }: { email: string; password: string }) {
-  const response = await axios.post(`${API_BASE}/auth/login`, {
-    Email: email,
-    Password: password,
+export async function login({ identifier, password }: { identifier: string; password: string }) {
+  const isEmail = identifier.includes("@");
+
+  const data = isEmail
+    ? { Email: identifier, Password: password }
+    : { UserName: identifier, Password: password };
+
+  const response = await axios.post(`${API_BASE}/auth/login`, data, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
   });
 
   const token = response.data.Token;
@@ -17,11 +24,17 @@ export async function login({ email, password }: { email: string; password: stri
   return response.data;
 }
 
-export async function register(UserName: string, Password: string, Email: string) {
-  const response = await axios.post(`${API_BASE}/auth/register`, {
-    UserName,
-    Password,
-    Email
+export async function register(userName: string, password: string, email: string) {
+  const data = {
+    UserName: userName,
+    Password: password,
+    Email: email
+  };
+
+  const response = await axios.post(`${API_BASE}/auth/register`, data, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
   });
 
   return response.data;

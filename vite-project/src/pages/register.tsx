@@ -15,22 +15,43 @@ export default function Register() {
 
 
   const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!isPasswordValid(Password)) {
-      setError("Your password must contain at least one uppercase letter, number, special character, and be at least 8 characters long.");
-      return;
-    }
+  e.preventDefault();
+  setError("");
+  setMessage("");
 
-    try {
-  await register(UserName, Password, Email);
-  setError(""); // Clear any errors
-  setMessage("Registration successful!"); // Show message
-} catch (err) {
-  setMessage(""); // If there is a success message, delete it.
-  setError((err as Error).message); // Show error
-}
+  if (!UserName.trim()) {
+    setError("Username is required.");
+    return;
+  }
 
-  };
+  if (!Email.trim()) {
+    setError("Email is required.");
+    return;
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(Email)) {
+    setError("Invalid email format.");
+    return;
+  }
+
+  if (!isPasswordValid(Password)) {
+    setError("Your password must contain at least one uppercase letter, number, special character, and be at least 8 characters long.");
+    return;
+  }
+
+  try {
+    await register(UserName, Password, Email);
+    setMessage("Registration successful!");
+    setError("");
+    setUsername("");
+    setPassword("");
+    setEmail("");
+  } catch (err: any) {
+    setError(err.response?.data?.message || err.message || "Registration failed.");
+    setMessage("");
+  }
+};
 
   return (
     <>
