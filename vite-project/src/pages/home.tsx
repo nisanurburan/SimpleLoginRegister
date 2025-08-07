@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
+import QrCode from "./QrCode";
+
 
 export default function Home() {
   const navigate = useNavigate();
@@ -56,6 +58,7 @@ export default function Home() {
   return (
     <div style={styles.container}>
       <h1 style={styles.title}>Welcome!</h1>
+      <QrCode /> {/* QR burada gösterilecek */}
       <button style={styles.button} onClick={handleLogout}>
         Log out
       </button>

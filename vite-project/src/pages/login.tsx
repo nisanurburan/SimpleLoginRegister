@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { login } from "../services/authServices";
-import {useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Login() {
   const [identifier, setIdentifier] = useState("");
@@ -20,7 +20,8 @@ export default function Login() {
     }
 
     try {
-      await login({ identifier, password });
+      const response = await login({ identifier, password }); // token should come here
+      localStorage.setItem("token", response.token);
       navigate("/home");
     } catch (err: any) {
       if (err.response && err.response.data && err.response.data.message) {
@@ -33,7 +34,6 @@ export default function Login() {
 
   return (
     <>
-    
       <style>{`
         .login-form {
           max-width: 400px;
